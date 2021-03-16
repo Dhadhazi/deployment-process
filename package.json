@@ -1,0 +1,23 @@
+{
+  "name": "deployment-process",
+  "version": "1.0.0",
+  "description": "This application is provided to you as an alternative starter project if you do not wish to host your own code done in the previous courses of this nanodegree. The udagram application is a fairly simple application that includes all the major components of a Full-Stack web application.",
+  "main": "index.js",
+  "scripts": {
+    "frontend:install": "cd udagram-frontend && npm install",
+    "frontend:build": "cd udagram-frontend && npm run build",
+    "backend:install": "cd udagram-api && npm install",
+    "backend:build": "cd udagram-api && npm run build",
+    "backend:test": "cd udagram-frontend && npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dhadhazi/deployment-process.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dhadhazi/deployment-process/issues"
+  },
+  "homepage": "https://github.com/Dhadhazi/deployment-process#readme"
+}
