@@ -3,16 +3,29 @@ orbs:
   node: circleci/node@4.2.0
   aws-cli: circleci/aws-cli@1.4.0
   eb: circleci/aws-elastic-beanstalk@1.0.0
+
+#Need the workflow so it only deploys from main
+workflows:
+  version: 1
+  build-deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only:
+                - main
+
 jobs:
-  build:
+  deploy:
     docker:
       - image: "cimg/base:stable"
+    # All scripts are in package.json so the CI/CD does not care about the environment
     steps:
       - node/install
       - checkout
-      - aws-cli/setup
+      - aws-cli/setup #Installing AWS to be able to Copy to S3
       - checkout
-      - eb/setup
+      - eb/setup #Installing Elastic-Beanstalk to be able to deploy to EB
       - run:
           name: Back-End Install
           command: npm run backend:install
@@ -22,3 +35,16 @@ jobs:
       - run:
           name: Deploy App
           command: npm run backend:deploy
+      - run:
+          name: Deploy ENV Variables to EB
+          command: eb setenv POSTGRES_USERNAME=$POSTGRES_USERNAME |
+            eb setenv POSTGRES_PASSWORD=$POSTGRES_PASSWORD |
+            eb setenv POSTGRES_DB=$POSTGRES_DB |
+            eb setenv POSTGRES_HOST=$POSTGRES_HOST |
+            eb setenv PORT=$PORT |
+            eb setenv AWS_REGION=$AWS_REGION |
+            eb setenv AWS_PROFILE=$AWS_PROFILE |
+            eb setenv AWS_BUCKET=$AWS_BUCKET |
+            eb setenv AWS_ACCESS_KEY=$AWS_ACCESS_KEY |
+            eb setenv AWS_SECRET=$AWS_SECRET |
+            eb setenv JWT_SECRET=$JWT_SECRET
