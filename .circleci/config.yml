@@ -44,18 +44,18 @@ jobs:
       #     command: npm run frontend:deploy
       - run:
           name: Waiting for backend deploy to finish
-          command: sleep 420
+          command: sleep 300
       - run:
           name: Deploy ENV Variables to EB
           command:
-            cd udagram-api && eb setenv POSTGRES_USERNAME=$MYENV_POSTGRES_USERNAME |
-            POSTGRES_PASSWORD=$MYENV_POSTGRES_PASSWORD |
-            POSTGRES_DB=$MYENV_POSTGRES_DB |
-            POSTGRES_HOST=$MYENV_POSTGRES_HOST |
-            PORT=$MYENV_PORT |
-            AWS_REGION=$MYENV_AWS_REGION |
-            AWS_PROFILE=$MYENV_AWS_PROFILE |
-            AWS_BUCKET=$MYENV_AWS_BUCKET |
-            AWS_ACCESS_KEY=$MYENV_AWS_ACCESS_KEY |
-            AWS_SECRET=$MYENV_AWS_SECRET |
+            cd udagram-api && eb setenv POSTGRES_USERNAME=$MYENV_POSTGRES_USERNAME
+            POSTGRES_PASSWORD=$MYENV_POSTGRES_PASSWORD
+            POSTGRES_DB=$MYENV_POSTGRES_DB
+            POSTGRES_HOST=$MYENV_POSTGRES_HOST
+            PORT=$MYENV_PORT
+            AWS_REGION=$MYENV_AWS_REGION
+            AWS_PROFILE=$MYENV_AWS_PROFILE
+            AWS_BUCKET=$MYENV_AWS_BUCKET
+            AWS_ACCESS_KEY=$MYENV_AWS_ACCESS_KEY
+            AWS_SECRET=$MYENV_AWS_SECRET
             JWT_SECRET=$MYENV_JWT_SECRET
