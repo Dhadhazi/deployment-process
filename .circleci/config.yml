@@ -43,8 +43,8 @@ jobs:
       #     name: Frontend Deploy
       #     command: npm run frontend:deploy
       - run:
-        name: Waiting for backend deploy to finish
-        command: sleep 420
+          name: Waiting for backend deploy to finish
+          command: sleep 420
       - run:
           name: Deploy ENV Variables to EB
           command:
