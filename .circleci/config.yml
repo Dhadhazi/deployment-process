@@ -45,7 +45,7 @@ jobs:
       - run:
           name: Deploy ENV Variables to EB
           command:
-            cd udagram-frontend && eb setenv POSTGRES_USERNAME=$MYENV_POSTGRES_USERNAME |
+            cd udagram-api && eb setenv POSTGRES_USERNAME=$MYENV_POSTGRES_USERNAME |
             eb setenv POSTGRES_PASSWORD=$MYENV_POSTGRES_PASSWORD |
             eb setenv POSTGRES_DB=$MYENV_POSTGRES_DB |
             eb setenv POSTGRES_HOST=$MYENV_POSTGRES_HOST |
