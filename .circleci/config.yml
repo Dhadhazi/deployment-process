@@ -2,37 +2,55 @@ version: 2.1
 orbs:
   node: circleci/node@4.2.0
   aws-cli: circleci/aws-cli@1.4.0
-  eb: circleci/aws-elastic-beanstalk@1.0.0
+  eb: circleci/aws-elastic-beanstalk@1.0.2
+#Need the workflow so it only deploys from main
+workflows:
+  version: 1
+  build-deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only:
+                - main
 jobs:
-  build:
+  deploy:
     docker:
       - image: "cimg/base:stable"
     # All scripts are in package.json so the CI/CD does not care about the environment
     steps:
       - node/install
-      - checkout
       - aws-cli/setup #Installing AWS to be able to Copy to S3
-      - checkout
       - eb/setup #Installing Elastic-Beanstalk to be able to deploy to EB
+      - checkout
       - run:
           name: Back-End Install
           command: npm run backend:install
       - run:
+          name: Frontend Install
+          command: npm run frontend:install
+      - run:
           name: Back-End Build
           command: npm run backend:build
       - run:
-          name: Deploy App
+          name: Frontend Build
+          command: npm run frontend:build
+      - run:
+          name: Back-End Deploy
           command: npm run backend:deploy
       - run:
+          name: Frontend Deploy
+          command: npm run frontend:deploy
+      - run:
           name: Deploy ENV Variables to EB
-          command: eb setenv POSTGRES_USERNAME=$POSTGRES_USERNAME |
-            eb setenv POSTGRES_PASSWORD=$POSTGRES_PASSWORD |
-            eb setenv POSTGRES_DB=$POSTGRES_DB |
-            eb setenv POSTGRES_HOST=$POSTGRES_HOST |
-            eb setenv PORT=$PORT |
-            eb setenv AWS_REGION=$AWS_REGION |
-            eb setenv AWS_PROFILE=$AWS_PROFILE |
-            eb setenv AWS_BUCKET=$AWS_BUCKET |
-            eb setenv AWS_ACCESS_KEY=$AWS_ACCESS_KEY |
-            eb setenv AWS_SECRET=$AWS_SECRET |
-            eb setenv JWT_SECRET=$JWT_SECRET
+          command: eb setenv POSTGRES_USERNAME=$MYENV_POSTGRES_USERNAME |
+            eb setenv POSTGRES_PASSWORD=$MYENV_POSTGRES_PASSWORD |
+            eb setenv POSTGRES_DB=$MYENV_POSTGRES_DB |
+            eb setenv POSTGRES_HOST=$MYENV_POSTGRES_HOST |
+            eb setenv PORT=$MYENV_PORT |
+            eb setenv AWS_REGION=$MYENV_AWS_REGION |
+            eb setenv AWS_PROFILE=$MYENV_AWS_PROFILE |
+            eb setenv AWS_BUCKET=$MYENV_AWS_BUCKET |
+            eb setenv AWS_ACCESS_KEY=$MYENV_AWS_ACCESS_KEY |
+            eb setenv AWS_SECRET=$MYENV_AWS_SECRET |
+            eb setenv JWT_SECRET=$MYENV_JWT_SECRET
