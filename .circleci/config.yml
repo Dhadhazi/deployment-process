@@ -3,7 +3,7 @@ orbs:
   node: circleci/node@4.2.0
   aws-cli: circleci/aws-cli@1.4.0
   eb: circleci/aws-elastic-beanstalk@1.0.2
-  
+
 #Need the workflow so it only deploys from main
 workflows:
   version: 1
@@ -39,12 +39,13 @@ jobs:
       - run:
           name: Frontend Build
           command: npm run frontend:build
-      - run:
-          name: Frontend Deploy
-          command: npm run frontend:deploy
+      # - run:
+      #     name: Frontend Deploy
+      #     command: npm run frontend:deploy
       - run:
           name: Deploy ENV Variables to EB
-          command: eb setenv POSTGRES_USERNAME=$MYENV_POSTGRES_USERNAME |
+          command:
+            cd udagram-frontend && eb setenv POSTGRES_USERNAME=$MYENV_POSTGRES_USERNAME |
             eb setenv POSTGRES_PASSWORD=$MYENV_POSTGRES_PASSWORD |
             eb setenv POSTGRES_DB=$MYENV_POSTGRES_DB |
             eb setenv POSTGRES_HOST=$MYENV_POSTGRES_HOST |
