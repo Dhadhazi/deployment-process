@@ -8,9 +8,10 @@ Project documentation can be found in the documentation folder
 
 1. Clone this repo locally into the location of your choice.
 2. Make sure all dependencies are installed to your machine
-3. Setup a Postgres Database, and set the env variables according to that
-4. Run `npm run frontend:install` and `npm run backend:install` from the main directory
-5. Run `npm start` to start the frontend and `npm run dev` to start the backend
+3. Setup a Postgres Database, and add it to the config file in the frontend
+4. Add all env variables for the backend
+5. Run `npm run frontend:install` and `npm run backend:install` from the main directory
+6. Run `npm start` to start the frontend and `npm run dev` to start the backend
 
 ### Dependencies
 
