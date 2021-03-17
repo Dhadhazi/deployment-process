@@ -1,38 +1,35 @@
 version: 2.1
-general:
-  branches:
-    only:
-      - main #Only deploy main branch
 orbs:
   node: circleci/node@4.2.0
   aws-cli: circleci/aws-cli@1.4.0
   eb: circleci/aws-elastic-beanstalk@1.0.0
 jobs:
-  build:
+  deploy:
     docker:
       - image: "cimg/base:stable"
+    # All scripts are in package.json so the CI/CD does not care about the environment
     steps:
       - node/install
       - checkout
       - aws-cli/setup #Installing AWS to be able to Copy to S3
       - checkout
       - eb/setup #Installing Elastic-Beanstalk to be able to deploy to EB
-      # All scripts are in package.json so the CI/CD does not care about the environment 
       - run:
           name: Back-End Install
           command: npm run backend:install
       - run:
-          name: Frontend Install
-          command: npm run frontend:install      
-      - run:
           name: Back-End Build
           command: npm run backend:build
       - run:
-          name: Frontend Build
-          command: npm run frontend:build
-      - run:
-          name: Deploy Backend
+          name: Deploy App
           command: npm run backend:deploy
-      -run:
-          name: Deploy Frontend to S3
-          command: npm run frontend:deploy
+#Need the worklfow so it only deploys from main
+workflows:
+  version: 1
+  build:
+    jobs:
+      - deploy:
+        filters:
+          branches:
+            only:
+              - main
