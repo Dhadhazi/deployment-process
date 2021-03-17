@@ -4,17 +4,6 @@ orbs:
   aws-cli: circleci/aws-cli@1.4.0
   eb: circleci/aws-elastic-beanstalk@1.0.0
 
-#Need the workflow so it only deploys from main
-workflows:
-  version: 1
-  build-deploy:
-    jobs:
-      - deploy:
-          filters:
-            branches:
-              only:
-                - main
-
 jobs:
   deploy:
     docker:
