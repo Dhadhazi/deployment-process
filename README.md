@@ -4,6 +4,8 @@ This is a Udacity Full Stack JavaScript Developer Nanodegree program project, fo
 
 Project documentation can be found in the documentation folder
 
+Project Link: http://udagram-frontend-jsnd.s3-website-eu-west-1.amazonaws.com/home
+
 ## How to run it locally
 
 1. Clone this repo locally into the location of your choice.
