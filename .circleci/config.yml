@@ -27,23 +27,23 @@ jobs:
       - run:
           name: Back-End Install
           command: npm run backend:install
-      # - run:
-      #     name: Frontend Install
-      #     command: npm run frontend:install
+      - run:
+          name: Frontend Install
+          command: npm run frontend:install
       - run:
           name: Back-End Build
           command: npm run backend:build
       - run:
           name: Back-End Deploy
           command: npm run backend:deploy
-      # - run:
-      #     name: Frontend Build
-      #     command: npm run frontend:build
-      # - run:
-      #     name: Frontend Deploy
-      #     command: npm run frontend:deploy
       - run:
-          name: Waiting for backend deploy to finish
+          name: Frontend Build
+          command: npm run frontend:build
+      - run:
+          name: Frontend Deploy
+          command: npm run frontend:deploy
+      - run:
+          name: Wait for EB to finish operations
           command: sleep 300
       - run:
           name: Deploy ENV Variables to EB
